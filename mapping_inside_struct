@@ -1,0 +1,39 @@
+pragma solidity^0.4.*;
+
+/* Using mapping inside the structure */
+
+contract Map_inside_Struct {
+    
+    address Teacher;
+    
+    struct Student{
+        uint rollNo;
+        string Name;
+        // mapping between the subject code and marks like A101 = 90
+        mapping(bytes15=>uint) marksperSubject;
+    }
+    mapping(address => Student) allStudents;
+    
+    function Map_inside_Struct(){
+        Teacher = msg.sender;
+    }
+    
+    modifier onlyTeacher() {
+        require(msg.sender == Teacher);
+        _;
+    }
+    function addRecords(address studentAddr,uint _rollNo, string _Name ) onlyTeacher {
+        Student memory std = Student(_rollNo, _Name);
+        allStudents[studentAddr] = std;
+        allStudents[studentAddr].marksperSubject['A101'] = 99;
+        
+    }
+    
+    function getMarks(address studentAddr) constant returns(uint){
+        return allStudents[studentAddr].marksperSubject['A101'];
+    }
+    
+    function getNameofStudent(address studentAddr) constant returns(string) {
+        return allStudents[studentAddr].Name;
+    }
+}
