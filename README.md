@@ -1,2 +1,2 @@
 # Sample Smart Contracts
-This repo contains smart contracts for learning purposed
+This repo contains smart contracts for learning purposes
